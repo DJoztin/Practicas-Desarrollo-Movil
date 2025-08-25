@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tvTitulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Preferencias de usuario"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:paddingBottom="12dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nvel de experiencia: " />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <RadioButton
+                    android:id="@+id/radioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Basico" />
+
+                <RadioButton
+                    android:id="@+id/radioButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Intermedio" />
+
+                <RadioButton
+                    android:id="@+id/radioButton3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Avanzado" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tecnologias de interes"
+                android:paddingTop="12dp"/>
+            <CheckBox
+                android:id="@+id/cbKotlin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kotlin" />
+            <CheckBox
+                android:id="@+id/cbJetpack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jetpack" />
+
+            <CheckBox
+                android:id="@+id/cbFirebase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Firebase" />
+
+            <Button
+                android:id="@+id/btnVerSeleccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ver seleccion"
+                android:layout_marginTop="12dp"/>
+
+            <TextView
+                android:id="@+id/tvResultado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Resultado aparece aqui" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
