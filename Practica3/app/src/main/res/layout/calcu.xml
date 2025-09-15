@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#282828"
+    android:backgroundTint="#2A2A2A"
+    android:padding="12dp">
+
+
+    <TextView
+        android:id="@+id/tvDisplay"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#6F6F6F"
+        android:backgroundTint="#6E6E6E"
+        android:fontFamily="@font/press_start_2p"
+        android:gravity="end"
+        android:padding="20dp"
+        android:text="0"
+        android:textColor="#2AFF3F"
+        android:textColorHighlight="#2AFF3F"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.gridlayout.widget.GridLayout
+        android:id="@+id/grid"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        app:alignmentMode="alignBounds"
+        app:columnCount="4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDisplay"
+        app:rowCount="5"
+        app:useDefaultMargins="true">
+
+        <!-- Fila 1 -->
+        <Button
+            android:id="@+id/btnC"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#232222"
+            android:backgroundTint="#232222"
+            android:elevation="10dp"
+            android:textColor="#86B08B"
+            android:text="C"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"
+            app:layout_rowWeight="1"
+            />
+
+        <Button
+            android:background="#232222"
+            android:backgroundTint="#232222"
+            android:elevation="10dp"
+            android:textColor="#86B08B"
+            android:id="@+id/btnBack"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="back"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"
+            app:layout_rowWeight="1" />
+
+        <Button
+            android:background="#232222"
+            android:backgroundTint="#232222"
+            android:elevation="10dp"
+            android:textColor="#86B08B"
+            android:id="@+id/btnDiv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="/"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"
+            app:layout_rowWeight="1" />
+
+        <Button
+            android:background="#232222"
+            android:backgroundTint="#232222"
+            android:elevation="10dp"
+            android:textColor="#86B08B"
+            android:id="@+id/btnMul"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="*"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"
+            app:layout_rowWeight="1" />
+
+        <!-- Fila 2 -->
+        <Button
+            android:background="#232222"
+            android:backgroundTint="#232222"
+            android:elevation="10dp"
+            android:textColor="#86B08B"
+            android:id="@+id/btn7"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="7"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"
+            app:layout_rowWeight="1" />
+
+        <Button
+            android:background="#232222"
+            android:backgroundTint="#232222"
+            android:elevation="10dp"
+            android:textColor="#86B08B"
+            android:id="@+id/btn8"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="8"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"
+            app:layout_rowWeight="1" />
+
+        <Button
+            android:background="#232222"
+            android:backgroundTint="#232222"
+            android:elevation="10dp"
+            android:textColor="#86B08B"
+            android:id="@+id/btn9"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="9"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"
+            app:layout_rowWeight="1" />
+
+        <Button
+            android:background="#232222"
+            android:backgroundTint="#232222"
+            android:elevation="10dp"
+            android:textColor="#86B08B"
+            android:id="@+id/btnSub"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="-"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"
+            app:layout_rowWeight="1" />
+
+        <!-- Fila 3 -->
+        <Button
+            android:background="#232222"
+            android:backgroundTint="#232222"
+            android:elevation="10dp"
+            android:textColor="#86B08B"
+            android:id="@+id/btn4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="4"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"
+            app:layout_rowWeight="1" />
+
+        <Button
+            android:background="#232222"
+            android:backgroundTint="#232222"
+            android:elevation="10dp"
+            android:textColor="#86B08B"
+            android:id="@+id/btn5"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="5"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"
+            app:layout_rowWeight="1" />
+
+        <Button
+            android:background="#232222"
+            android:backgroundTint="#232222"
+            android:elevation="10dp"
+            android:textColor="#86B08B"
+            android:id="@+id/btn6"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="6"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"
+            app:layout_rowWeight="1" />
+
+        <Button
+            android:background="#232222"
+            android:backgroundTint="#232222"
+            android:elevation="10dp"
+            android:textColor="#86B08B"
+            android:id="@+id/btnAdd"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="+"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"
+            app:layout_rowWeight="1" />
+
+        <!-- Fila 4 -->
+        <Button
+            android:background="#232222"
+            android:backgroundTint="#232222"
+            android:elevation="10dp"
+            android:textColor="#86B08B"
+            android:id="@+id/btn1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="1"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"
+            app:layout_rowWeight="1" />
+
+        <Button
+            android:background="#232222"
+            android:backgroundTint="#232222"
+            android:elevation="10dp"
+            android:textColor="#86B08B"
+            android:id="@+id/btn2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="2"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"
+            app:layout_rowWeight="1" />
+
+        <Button
+            android:background="#232222"
+            android:backgroundTint="#232222"
+            android:elevation="10dp"
+            android:textColor="#86B08B"
+            android:id="@+id/btn3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="3"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"
+            app:layout_rowWeight="1" />
+
+        <Button
+            android:background="#232222"
+            android:backgroundTint="#232222"
+            android:elevation="10dp"
+            android:textColor="#86B08B"
+            android:id="@+id/btnEq"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="="
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"
+            app:layout_rowWeight="1" />
+
+        <!-- Fila 5 -->
+        <Button
+            android:background="#232222"
+            android:backgroundTint="#232222"
+            android:elevation="10dp"
+            android:textColor="#86B08B"
+            android:id="@+id/btn0"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="0"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"
+            app:layout_rowWeight="1" />
+
+        <Button
+            android:background="#232222"
+            android:backgroundTint="#232222"
+            android:elevation="10dp"
+            android:textColor="#86B08B"
+            android:id="@+id/btnDot"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="."
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"
+            app:layout_rowWeight="1" />
+
+        <Button
+            android:background="#232222"
+            android:backgroundTint="#232222"
+            android:elevation="10dp"
+            android:textColor="#86B08B"
+            android:id="@+id/btnSign"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="+/-"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"
+            app:layout_rowWeight="1" />
+
+        <Button
+            android:background="#232222"
+            android:backgroundTint="#232222"
+            android:elevation="10dp"
+            android:textColor="#86B08B"
+            android:id="@+id/btnAns"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="ANS"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"
+            app:layout_rowWeight="1" />
+
+    </androidx.gridlayout.widget.GridLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
