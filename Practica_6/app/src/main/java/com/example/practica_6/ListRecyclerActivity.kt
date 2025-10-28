@@ -8,7 +8,6 @@ import com.parse.ParseObject
 import com.parse.ParseQuery
 
 class ListRecyclerActivity: AppCompatActivity() {
-
     private lateinit var b: ActivityrecyclerBinding
     private lateinit var adapter: ProductoAdapter
 
@@ -21,21 +20,23 @@ class ListRecyclerActivity: AppCompatActivity() {
         b.recyclerProductos.layoutManager = LinearLayoutManager(this)
         b.recyclerProductos.adapter = adapter
 
-        private fun cargarDesdeBack4App(){
-            val query = ParseQuery.getQuery<ParseObject>("Producto")
-            query.orderByAscending("nombre")
-            query.findInBackground{ lista, e ->
-                if(e==null && lista != null){
-                    val mapeo = lista.map{ po ->
-                        Producto(
-                            id = po.objectId,
-                            nombre = po.getString("nombre")?: "Sin nombre",
-                            precio = po.getNumber("precio")?.toDouble() ?: 0.0,
-                            imagenUrl = po.getString("imagenUrl")
-                        )
-                    }
-                    adapter.submitList(mapeo)
+        cargarDesdeBack4App()
+    }
+
+    private fun cargarDesdeBack4App(){
+        val query = ParseQuery.getQuery<ParseObject>("Producto")
+        query.orderByAscending("nombre")
+        query.findInBackground{ lista, e ->
+            if(e == null && lista != null){
+                val mapeo = lista.map{ po ->
+                    Producto(
+                        id = po.objectId,
+                        nombre = po.getString("nombre")?: "Sin nombre",
+                        precio = po.getNumber("precio")?.toDouble() ?: 0.0,
+                        imagenUrl = po.getString("imagenUrl")
+                    )
                 }
+                adapter.submitList(mapeo)
             }
         }
     }

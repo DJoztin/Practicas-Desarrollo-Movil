@@ -1,7 +1,7 @@
 package com.example.practica_6
 
-import android.R
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.example.practica_6.databinding.ActivitylistviewBinding
@@ -9,8 +9,8 @@ import com.parse.ParseObject
 import com.parse.ParseQuery
 
 
-class ListViewActivity: AppCompatActivity () {
-    private lateinit var b : ActivitylistviewBinding
+class ListViewActivity: AppCompatActivity() {
+    private lateinit var b: ActivitylistviewBinding
     private val datos = mutableListOf<Producto>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,19 +27,20 @@ class ListViewActivity: AppCompatActivity () {
 
         val query = ParseQuery.getQuery<ParseObject>("Producto")
         query.orderByAscending("nombre")
-        query.findInBackground { list, e ->
-            if (e == null && list != null){
+        Log.i("appp",query.toString())
+        query.findInBackground{list, e ->
+            if(e == null && list != null){
                 datos.clear()
                 val nombres = mutableListOf<String>()
-                for (po in list){
+                for(po in list){
                     val p = Producto(
                         id = po.objectId,
-                        nombre = po.getString("nombre")  ?: "Sin nombre",
-                        precio = po.getNumber("precio") ?.toDouble() ?: 0.0,
+                        nombre = po.getString("nombre") ?: "Sin nombre",
+                        precio = po.getNumber("precio")?.toDouble() ?: 0.0,
                         imagenUrl = po.getString("imagenUrl")
                     )
                     datos.add(p)
-                    nombres.add("${p.nombre} \$${"%.2f".format(p.precio)}")
+                    nombres.add("${p.nombre}  \$${"%.2f".format(p.precio)}")
                 }
                 adapter.clear()
                 adapter.addAll(nombres)

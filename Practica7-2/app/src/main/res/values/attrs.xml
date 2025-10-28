@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Declaracion de atributos personalizados-->
+    <declare-styleable name="QuantityStepper">
+        <attr name="qs_min" format="integer"/>
+        <attr name="qs_max" format="integer"/>
+        <attr name="qs_step" format="integer"/>
+        <attr name="qs_initial" format="integer"/>
+
+        <attr name="qs_unitPrice" format="float"/>
+
+        <attr name="qs_buttonIconMinus" format="reference"/>
+        <attr name="qs_buttonIconPlus" format="reference"/>
+        <attr name="qs_tint" format="color|reference"/>
+
+        <attr name="qs_cornerRadius" format="dimension"/>
+        <attr name="qs_buttonSize" format="dimension"/>
+
+        <!-- comportamiento extra -->
+        <attr name="qs_autoRepeatEnabled" format="boolean"/>
+        <attr name="qs_vibrateOnLimit" format="boolean"/>
+    </declare-styleable>
+    <attr name="quantityStepperStyle" format="reference"/>
+</resources>
