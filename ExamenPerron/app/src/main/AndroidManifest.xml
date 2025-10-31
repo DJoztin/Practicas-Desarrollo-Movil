@@ -23,14 +23,17 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".MusicWidget"
+        <receiver android:name=".MusicAppWidgetProvider"
             android:exported="true"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="com.example.examenperron.ACTION_APP_EVENT" />
-
             </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/music_widget_provider" />
+
         </receiver>
     </application>
 
