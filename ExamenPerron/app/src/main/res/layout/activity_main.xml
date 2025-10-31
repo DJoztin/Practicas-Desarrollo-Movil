@@ -14,13 +14,21 @@
         android:scaleType="centerCrop"
         android:contentDescription="Background Image" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewSongs"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/musicWidget"
+        android:padding="8dp"
+        android:clipToPadding="false"
+        android:background="#80000000" />
+
     <!-- Contenedor de controles de música en la parte inferior -->
     <com.example.examenperron.MusicWidget
         android:id="@+id/musicWidget"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="70dp"
         />
 
 </RelativeLayout>
