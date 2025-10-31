@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="musicWidget">
+        <attr name="mw_buttonIconPlay" format="reference" />
+        <attr name="mw_buttonIconPause" format="reference" />
+        <attr name="mw_buttonIconStop" format="reference" />
+        <attr name="mw_buttonIconNext" format="reference" />
+        <attr name="mw_buttonIconPrev" format="reference" />
+        <attr name="mw_image" format="reference" />
+
+    </declare-styleable>
+    <attr name="musicWidgetStyle" format="reference" />
+</resources>

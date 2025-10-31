@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">ExamenPerron</string>
+    <string name="mw_image">Img Rola</string>
+    <string name="default_song_title">Song Title</string>
+    <string name="previous_track">Previous Track</string>
+    <string name="play_pause">Play/Pause</string>
+    <string name="stop">Stop</string>
+    <string name="next_track">Next Track</string>
+
+
+
+
+</resources>

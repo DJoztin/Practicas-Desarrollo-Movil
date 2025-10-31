@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Widget" />
+    <style name="Theme.ExamenPerron" parent="Theme.AppCompat.DayNight.NoActionBar" >
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="android:navigationBarColor">?attr/colorPrimary</item>
+
+        <item name="musicWidgetStyle">@style/Widget.MusicWidget</item>
+    </style>
+
+    <style name="Widget.MusicWidget">
+        <item name= "mw_buttonIconPlay">@drawable/ic_play_white</item>
+        <item name= "mw_buttonIconPause">@drawable/ic_pause_white</item>
+        <item name= "mw_buttonIconStop">@drawable/ic_stop_white</item>
+        <item name= "mw_buttonIconNext">@drawable/ic_skip_next_white</item>
+        <item name= "mw_buttonIconPrev">@drawable/ic_skip_previous_white</item>
+
+
+    </style>
+</resources>
