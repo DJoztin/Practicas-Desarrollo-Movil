@@ -3,9 +3,11 @@ package com.example.examenperron
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.example.examenperron.databinding.MusicWidgetBinding
 
 class MusicWidget @JvmOverloads constructor(
     context: Context,
@@ -23,18 +25,35 @@ class MusicWidget @JvmOverloads constructor(
     private var listener: OnMusicControlsClickListener? = null
     private var isPlaying: Boolean = false
 
-    private var binding: MusicWidgetBinding =
-        MusicWidgetBinding.inflate(LayoutInflater.from(context), this)
+    // Define views
+    private val albumArt: ImageView
+    private val songTitle: TextView
+    private val prevButton: ImageButton
+    private val playPauseButton: ImageButton
+    private val stopButton: ImageButton
+    private val nextButton: ImageButton
 
     init {
-        binding.widgetButtonPrev.setOnClickListener { listener?.onPreviousClick() }
-        binding.widgetButtonPlayPause.setOnClickListener {
+        // Inflate the new layout into this custom view
+        LayoutInflater.from(context).inflate(R.layout.view_music_widget, this, true)
+
+        // Find views by their IDs
+        albumArt = findViewById(R.id.mw_img)
+        songTitle = findViewById(R.id.widget_song_title)
+        prevButton = findViewById(R.id.widget_button_prev)
+        playPauseButton = findViewById(R.id.widget_button_play_pause)
+        stopButton = findViewById(R.id.widget_button_stop)
+        nextButton = findViewById(R.id.widget_button_next)
+
+        // Set listeners
+        prevButton.setOnClickListener { listener?.onPreviousClick() }
+        playPauseButton.setOnClickListener {
             isPlaying = !isPlaying
             togglePlayPause(isPlaying)
             listener?.onPlayPauseClick()
         }
-        binding.widgetButtonStop.setOnClickListener { listener?.onStopClick() }
-        binding.widgetButtonNext.setOnClickListener { listener?.onNextClick() }
+        stopButton.setOnClickListener { listener?.onStopClick() }
+        nextButton.setOnClickListener { listener?.onNextClick() }
     }
 
     fun setOnMusicControlsClickListener(l: OnMusicControlsClickListener?) {
@@ -42,17 +61,17 @@ class MusicWidget @JvmOverloads constructor(
     }
 
     fun setSongTitle(title: String) {
-        binding.widgetSongTitle.text = title
+        songTitle.text = title
     }
 
     fun setAlbumArt(resId: Int) {
-        binding.mwImg.setImageResource(resId)
+        albumArt.setImageResource(resId)
     }
 
     fun togglePlayPause(playing: Boolean) {
         isPlaying = playing
         val iconRes = if (isPlaying) R.drawable.ic_pause_white else R.drawable.ic_play_white
-        binding.widgetButtonPlayPause.setImageDrawable(ContextCompat.getDrawable(context, iconRes))
+        playPauseButton.setImageDrawable(ContextCompat.getDrawable(context, iconRes))
     }
 
     fun setIsPlaying(playing: Boolean) {

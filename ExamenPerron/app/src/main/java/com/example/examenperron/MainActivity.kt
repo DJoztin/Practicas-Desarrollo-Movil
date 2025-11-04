@@ -17,8 +17,12 @@ class MainActivity : AppCompatActivity(), MusicWidget.OnMusicControlsClickListen
     data class Song(val title: String, val resourceId: Int, val albumArtResourceId: Int)
 
     private val songList = listOf(
-        Song("Tetris 99", R.raw.tetris99, R.drawable.tetris99),
-        Song("Tetris Metal Cover", R.raw.tetris_metal_cover, R.mipmap.ic_launcher) // Placeholder
+        Song("Gourmet Race", R.raw.gourmet_race, R.drawable.ic_kirby_song),
+        Song("Mario Water", R.raw.mario_water, R.drawable.ic_mm_icon),
+        Song("Minecraft Main Theme", R.raw.minecraft_main, R.drawable.ic_mc_song),
+        Song("Tetris Metal Cover", R.raw.tetris_metal_cover, R.drawable.ic_tetris_song),
+        Song("Wii Sports", R.raw.wii_sports, R.drawable.ic_wii_song),
+        Song("You Get What You Give", R.raw.you_get_what_you_give, R.drawable.ic_gg_song)
     )
     private var currentSongIndex = 0
 

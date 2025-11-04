@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     tools:context=".MainActivity">
 
     <!-- Imagen principal/de fondo -->
@@ -15,13 +16,14 @@
         android:contentDescription="Background Image" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="30dp"
         android:id="@+id/recyclerViewSongs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/musicWidget"
-        android:padding="8dp"
+
         android:clipToPadding="false"
-        android:background="#80000000" />
+         />
 
     <!-- Contenedor de controles de música en la parte inferior -->
     <com.example.examenperron.MusicWidget
@@ -29,6 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
         />
 
 </RelativeLayout>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Widget" />
-    <style name="Theme.ExamenPerron" parent="Theme.AppCompat.DayNight.NoActionBar" >
+    <style name="Theme.ExamenPerron" parent="Theme.AppCompat.NoActionBar" >
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">?attr/colorPrimary</item>
 
