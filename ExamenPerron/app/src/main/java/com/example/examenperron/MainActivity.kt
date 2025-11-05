@@ -1,30 +1,51 @@
 package com.example.examenperron
 
-import android.media.MediaPlayer
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
+import android.media.MediaMetadataRetriever
+import android.net.Uri
 import android.os.Bundle
-import android.widget.Toast
+import android.os.IBinder
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class MainActivity : AppCompatActivity(), MusicWidget.OnMusicControlsClickListener, MediaPlayer.OnCompletionListener, SongAdapter.OnItemClickListener {
+class MainActivity : AppCompatActivity(), MusicWidget.OnMusicControlsClickListener, SongAdapter.OnItemClickListener {
 
     private lateinit var musicWidget: MusicWidget
-    private lateinit var mediaPlayer: MediaPlayer
     private lateinit var recyclerViewSongs: RecyclerView
     private lateinit var songAdapter: SongAdapter
 
-    data class Song(val title: String, val resourceId: Int, val albumArtResourceId: Int)
+    private var musicService: MusicService? = null
+    private var isBound = false
 
-    private val songList = listOf(
-        Song("Gourmet Race", R.raw.gourmet_race, R.drawable.ic_kirby_song),
-        Song("Mario Water", R.raw.mario_water, R.drawable.ic_mm_icon),
-        Song("Minecraft Main Theme", R.raw.minecraft_main, R.drawable.ic_mc_song),
-        Song("Tetris Metal Cover", R.raw.tetris_metal_cover, R.drawable.ic_tetris_song),
-        Song("Wii Sports", R.raw.wii_sports, R.drawable.ic_wii_song),
-        Song("You Get What You Give", R.raw.you_get_what_you_give, R.drawable.ic_gg_song)
-    )
-    private var currentSongIndex = 0
+    private val serviceConnection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            val binder = service as MusicService.MusicBinder
+            musicService = binder.getService()
+            isBound = true
+            // Initialize RecyclerView and Adapter here
+            recyclerViewSongs = findViewById(R.id.recyclerViewSongs)
+            recyclerViewSongs.layoutManager = LinearLayoutManager(this@MainActivity)
+            songAdapter = SongAdapter(musicService!!.songList, this@MainActivity) {
+                val retriever = MediaMetadataRetriever()
+                val uri = Uri.parse("android.resource://${packageName}/${it.resourceId}")
+                retriever.setDataSource(this@MainActivity, uri)
+                val durationStr = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+                val duration = durationStr?.toLongOrNull() ?: 0
+                String.format("%d:%02d", (duration / 1000) / 60, (duration / 1000) % 60)
+            }
+            recyclerViewSongs.adapter = songAdapter
+            updateMusicWidgetInfo()
+        }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+            musicService = null
+            isBound = false
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,81 +54,50 @@ class MainActivity : AppCompatActivity(), MusicWidget.OnMusicControlsClickListen
         musicWidget = findViewById(R.id.musicWidget)
         musicWidget.setOnMusicControlsClickListener(this)
 
-        // Setup RecyclerView
-        recyclerViewSongs = findViewById(R.id.recyclerViewSongs)
-        recyclerViewSongs.layoutManager = LinearLayoutManager(this)
-        songAdapter = SongAdapter(songList, this)
-        recyclerViewSongs.adapter = songAdapter
-
-        // Initialize MediaPlayer with the first song
-        mediaPlayer = MediaPlayer.create(this, songList[currentSongIndex].resourceId)
-        mediaPlayer.setVolume(0.7f, 0.7f) // Set initial volume to 70%
-        mediaPlayer.setOnCompletionListener(this) // Set completion listener
-        updateMusicWidgetInfo()
+        val serviceIntent = Intent(this, MusicService::class.java)
+        bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE)
     }
 
     private fun updateMusicWidgetInfo() {
-        musicWidget.setSongTitle(songList[currentSongIndex].title)
-        musicWidget.setAlbumArt(songList[currentSongIndex].albumArtResourceId)
-        musicWidget.setIsPlaying(mediaPlayer.isPlaying)
-    }
-
-    private fun playCurrentSong() {
-        mediaPlayer.stop()
-        mediaPlayer.release()
-        mediaPlayer = MediaPlayer.create(this, songList[currentSongIndex].resourceId)
-        mediaPlayer.setVolume(0.7f, 0.7f) // Re-apply volume after creating new MediaPlayer
-        mediaPlayer.setOnCompletionListener(this) // Re-set completion listener
-        mediaPlayer.start()
-        musicWidget.setIsPlaying(true)
-        updateMusicWidgetInfo()
-    }
-
-    override fun onPreviousClick() {
-        currentSongIndex = (currentSongIndex - 1 + songList.size) % songList.size
-        playCurrentSong()
-        Toast.makeText(this, "Previous: ${songList[currentSongIndex].title}", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onPlayPauseClick() {
-        if (mediaPlayer.isPlaying) {
-            mediaPlayer.pause()
-            musicWidget.setIsPlaying(false)
-            Toast.makeText(this, "Paused: ${songList[currentSongIndex].title}", Toast.LENGTH_SHORT).show()
-        } else {
-            mediaPlayer.start()
-            musicWidget.setIsPlaying(true)
-            Toast.makeText(this, "Playing: ${songList[currentSongIndex].title}", Toast.LENGTH_SHORT).show()
+        if (isBound) {
+            musicService?.let {
+                musicWidget.setSongTitle(it.songList[it.currentSongIndex].title)
+                musicWidget.setAlbumArt(it.songList[it.currentSongIndex].albumArtResourceId)
+                musicWidget.setIsPlaying(it.isPlaying())
+            }
         }
     }
 
+    override fun onPreviousClick() {
+        musicService?.playPreviousSong()
+        updateMusicWidgetInfo()
+    }
+
+    override fun onPlayPauseClick() {
+        musicService?.togglePlayPause()
+        updateMusicWidgetInfo()
+    }
+
     override fun onStopClick() {
-        mediaPlayer.stop()
-        mediaPlayer.prepareAsync() // Prepare for next playback
-        musicWidget.setIsPlaying(false)
-        Toast.makeText(this, "Stopped: ${songList[currentSongIndex].title}", Toast.LENGTH_SHORT).show()
+        musicService?.stopMusic()
+        updateMusicWidgetInfo()
     }
 
     override fun onNextClick() {
-        currentSongIndex = (currentSongIndex + 1) % songList.size
-        playCurrentSong()
-        Toast.makeText(this, "Next: ${songList[currentSongIndex].title}", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onCompletion(mp: MediaPlayer?) {
-        // When current song finishes, play the next one
-        currentSongIndex = (currentSongIndex + 1) % songList.size
-        playCurrentSong()
+        musicService?.playNextSong()
+        updateMusicWidgetInfo()
     }
 
     override fun onItemClick(position: Int) {
-        currentSongIndex = position
-        playCurrentSong()
-        Toast.makeText(this, "Selected: ${songList[currentSongIndex].title}", Toast.LENGTH_SHORT).show()
+        musicService?.playSongAt(position)
+        updateMusicWidgetInfo()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mediaPlayer.release()
+        if (isBound) {
+            unbindService(serviceConnection)
+            isBound = false
+        }
     }
 }

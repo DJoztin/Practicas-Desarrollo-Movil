@@ -3,6 +3,7 @@ package com.example.examenperron
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
@@ -10,52 +11,61 @@ import android.widget.Toast
 
 class MusicAppWidgetProvider : AppWidgetProvider() {
 
-    companion object {
-        private const val ACTION_PREVIOUS = "com.example.examenperron.ACTION_PREVIOUS"
-        private const val ACTION_PLAY_PAUSE = "com.example.examenperron.ACTION_PLAY_PAUSE"
-        private const val ACTION_STOP = "com.example.examenperron.ACTION_STOP"
-        private const val ACTION_NEXT = "com.example.examenperron.ACTION_NEXT"
-    }
-
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         for (appWidgetId in appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId)
+            updateAppWidget(context, appWidgetManager, appWidgetId, false, context.getString(R.string.default_song_title), R.mipmap.ic_launcher)
         }
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        super.onReceive(context, intent)
-
         if (context == null || intent == null) return
 
-        when (intent.action) {
-            ACTION_PREVIOUS -> {
-                Toast.makeText(context, "Widget: Previous Clicked", Toast.LENGTH_SHORT).show()
-                // Handle previous track logic here
-            }
-            ACTION_PLAY_PAUSE -> {
-                Toast.makeText(context, "Widget: Play/Pause Clicked", Toast.LENGTH_SHORT).show()
-                // Handle play/pause logic here
-            }
-            ACTION_STOP -> {
-                Toast.makeText(context, "Widget: Stop Clicked", Toast.LENGTH_SHORT).show()
-                // Handle stop logic here
-            }
-            ACTION_NEXT -> {
-                Toast.makeText(context, "Widget: Next Clicked", Toast.LENGTH_SHORT).show()
-                // Handle next track logic here
+        val action = intent.action
+        if (action?.startsWith("com.example.examenperron.ACTION") == true && action != MusicService.ACTION_UPDATE_WIDGET) {
+            val serviceIntent = Intent(context, MusicService::class.java)
+            serviceIntent.action = action
+            context.startService(serviceIntent)
+        }
+
+        val appWidgetManager = AppWidgetManager.getInstance(context)
+        val thisAppWidget =
+            ComponentName(context.packageName, MusicAppWidgetProvider::class.java.name)
+        val appWidgetIds = appWidgetManager.getAppWidgetIds(thisAppWidget)
+
+        for (appWidgetId in appWidgetIds) {
+            if (action == MusicService.ACTION_UPDATE_WIDGET) {
+                val isPlaying = intent.getBooleanExtra("is_playing", false)
+                val songTitle = intent.getStringExtra("song_title")
+                val albumArtResId = intent.getIntExtra("album_art_res_id", R.mipmap.ic_launcher)
+                updateAppWidget(context, appWidgetManager, appWidgetId, isPlaying, songTitle, albumArtResId)
             }
         }
+
+        super.onReceive(context, intent)
     }
 
-    private fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
+    private fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int, isPlaying: Boolean = false, songTitle: String? = null, albumArtResId: Int? = null) {
         val views = RemoteViews(context.packageName, R.layout.music_widget)
 
         // Set up PendingIntents for each button
-        views.setOnClickPendingIntent(R.id.widget_button_prev, getPendingIntent(context, ACTION_PREVIOUS))
-        views.setOnClickPendingIntent(R.id.widget_button_play_pause, getPendingIntent(context, ACTION_PLAY_PAUSE))
-        views.setOnClickPendingIntent(R.id.widget_button_stop, getPendingIntent(context, ACTION_STOP))
-        views.setOnClickPendingIntent(R.id.widget_button_next, getPendingIntent(context, ACTION_NEXT))
+        views.setOnClickPendingIntent(R.id.widget_button_prev, getPendingIntent(context, MusicService.ACTION_PREVIOUS))
+        views.setOnClickPendingIntent(R.id.widget_button_play_pause, getPendingIntent(context, MusicService.ACTION_TOGGLE_PLAY_PAUSE))
+        views.setOnClickPendingIntent(R.id.widget_button_stop, getPendingIntent(context, MusicService.ACTION_STOP))
+        views.setOnClickPendingIntent(R.id.widget_button_next, getPendingIntent(context, MusicService.ACTION_NEXT))
+
+        // Set play/pause icon
+        views.setImageViewResource(R.id.widget_button_play_pause, if (isPlaying) R.drawable.ic_pause_white else R.drawable.ic_play_white)
+
+        // Set song title
+        songTitle?.let { views.setTextViewText(R.id.widget_song_title, it) }
+
+        // Set album art
+        albumArtResId?.let { views.setImageViewResource(R.id.mw_img, it) }
+
+        // Intent to launch the main activity
+        val launchIntent = Intent(context, MainActivity::class.java)
+        val pendingLaunchIntent = PendingIntent.getActivity(context, 0, launchIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+        views.setOnClickPendingIntent(R.id.widget_root, pendingLaunchIntent)
 
         // Update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views)

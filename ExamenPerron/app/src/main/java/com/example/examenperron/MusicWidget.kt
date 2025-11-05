@@ -35,11 +35,12 @@ class MusicWidget @JvmOverloads constructor(
 
     init {
         // Inflate the new layout into this custom view
-        LayoutInflater.from(context).inflate(R.layout.view_music_widget, this, true)
+        LayoutInflater.from(context).inflate(R.layout.music_widget, this, true)
 
         // Find views by their IDs
         albumArt = findViewById(R.id.mw_img)
         songTitle = findViewById(R.id.widget_song_title)
+        songTitle.isSelected = true // Enable marquee effect
         prevButton = findViewById(R.id.widget_button_prev)
         playPauseButton = findViewById(R.id.widget_button_play_pause)
         stopButton = findViewById(R.id.widget_button_stop)

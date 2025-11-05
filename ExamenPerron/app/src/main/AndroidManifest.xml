@@ -28,6 +28,7 @@
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.example.examenperron.ACTION_UPDATE_WIDGET" />
             </intent-filter>
 
             <meta-data
@@ -35,6 +36,8 @@
                 android:resource="@xml/music_widget_provider" />
 
         </receiver>
+
+        <service android:name=".MusicService" android:enabled="true"/>
     </application>
 
 </manifest>

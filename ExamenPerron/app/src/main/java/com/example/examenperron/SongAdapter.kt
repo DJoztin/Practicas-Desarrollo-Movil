@@ -7,8 +7,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class SongAdapter(private val songList: List<MainActivity.Song>, private val listener: OnItemClickListener) :
-    RecyclerView.Adapter<SongAdapter.SongViewHolder>() {
+class SongAdapter(
+    private val songList: List<MusicService.Song>,
+    private val listener: OnItemClickListener,
+    private val getDuration: (MusicService.Song) -> String
+) : RecyclerView.Adapter<SongAdapter.SongViewHolder>() {
 
     interface OnItemClickListener {
         fun onItemClick(position: Int)
@@ -23,6 +26,7 @@ class SongAdapter(private val songList: List<MainActivity.Song>, private val lis
         val currentSong = songList[position]
         holder.textViewSongTitle.text = currentSong.title
         holder.imageViewAlbumArt.setImageResource(currentSong.albumArtResourceId)
+        holder.textViewSongDuration.text = getDuration(currentSong)
     }
 
     override fun getItemCount(): Int {
@@ -32,6 +36,7 @@ class SongAdapter(private val songList: List<MainActivity.Song>, private val lis
     inner class SongViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageViewAlbumArt: ImageView = itemView.findViewById(R.id.imageViewAlbumArt)
         val textViewSongTitle: TextView = itemView.findViewById(R.id.textViewSongTitle)
+        val textViewSongDuration: TextView = itemView.findViewById(R.id.textViewSongDuration)
 
         init {
             itemView.setOnClickListener {
