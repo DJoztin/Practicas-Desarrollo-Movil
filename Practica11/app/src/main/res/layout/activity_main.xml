@@ -1,7 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:orientation="vertical"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="12dp">
 
+    <Spinner
+        android:id="@+id/spTool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/tools"/>
+
+    <!--Paleta de colores-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingTop="8dp">
+
+        <Button
+            style="@style/SwatchButton"
+            android:id="@+id/btnCBlack"
+            android:background="#000000"
+            android:backgroundTint="@null"/>
+
+        <Button
+            style="@style/SwatchButton"
+            android:id="@+id/btnCRed"
+            android:background="#F44336"
+            android:backgroundTint="@null"/>
+
+        <Button
+            style="@style/SwatchButton"
+            android:id="@+id/btnCGreen"
+            android:background="#4CAF50"
+            android:backgroundTint="@null"/>
+
+        <Button
+            style="@style/SwatchButton"
+            android:id="@+id/btnCBlue"
+            android:background="#2196F3"
+            android:backgroundTint="@null"/>
+
+        <Button
+            style="@style/SwatchButton"
+            android:id="@+id/btnCYellow"
+            android:background="#FFEB3B"
+            android:backgroundTint="@null"/>
+
+    </LinearLayout>
+
+    <!--Mezclador RGB-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="8dp">
+        <TextView style="@style/LabelText" android:text="Mezclador RGB"/>
+        <View
+            android:id="@+id/vColorPreview"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:background="#000"/>
+        <SeekBar style="@style/CustomSeekBar" android:id="@+id/seekR" android:max="255" />
+        <SeekBar style="@style/CustomSeekBar" android:id="@+id/seekG" android:max="255"/>
+        <SeekBar style="@style/CustomSeekBar" android:id="@+id/seekB" android:max="255"/>
+    </LinearLayout>
+
+    <!--Grosor y acciones-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <TextView style="@style/LabelText" android:text="Grosor:"/>
+
+        <SeekBar
+            android:id="@+id/seekStroke"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:max="60" />
+
+        <Button style="@style/SwatchButton" android:id="@+id/btnUndo" android:text="Deshacer"/>
+        <Button style="@style/SwatchButton" android:id="@+id/btnClear" android:text="Limpiar"/>
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Guardar"
+            android:layout_marginLeft="8dp"/>
+
+    </LinearLayout>
+    <!--Lienzo-->
+    <!--PaintView nombre de una clase kt-->
+    <com.icc.practica11.PaintView
+        android:id="@+id/paintView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#FFFFFF"
+        />
 </LinearLayout>
